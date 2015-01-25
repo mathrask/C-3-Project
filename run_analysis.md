@@ -25,12 +25,6 @@ download.file(url, destfile=file.path(path, f))
 
 # Unzip the file 
 
-# executable <- file.path("C:", "Program Files (x86)", "7-Zip", "7z.exe")
-# parameters <- "x"
-# cmd <- paste(paste0("\"", executable, "\""), parameters, paste0("\"", file.path(path, 
-#                                                                                 f), "\""))
-# system(cmd)
-
 unzip(file.path(path,f), overwrite = TRUE)
 
 ##The unzip put the files in a folder named UCI HAR Dataset. Set this folder as the input path. List the files here.
@@ -145,27 +139,42 @@ grepthis <- function(regex) {
 ## Features with 2 categories
 n <- 2
 y <- matrix(seq(1, n), nrow = n)
+
 x <- matrix(c(grepthis("^t"), grepthis("^f")), ncol = nrow(y))
+
 dt$featDomain <- factor(x %*% y, labels = c("Time", "Freq"))
+
 x <- matrix(c(grepthis("Acc"), grepthis("Gyro")), ncol = nrow(y))
+
 dt$featInstrument <- factor(x %*% y, labels = c("Accelerometer", "Gyroscope"))
+
 x <- matrix(c(grepthis("BodyAcc"), grepthis("GravityAcc")), ncol = nrow(y))
+
 dt$featAcceleration <- factor(x %*% y, labels = c(NA, "Body", "Gravity"))
+
 x <- matrix(c(grepthis("mean()"), grepthis("std()")), ncol = nrow(y))
+
 dt$featVariable <- factor(x %*% y, labels = c("Mean", "SD"))
+
 ## Features with 1 category
 dt$featJerk <- factor(grepthis("Jerk"), labels = c(NA, "Jerk"))
+
 dt$featMagnitude <- factor(grepthis("Mag"), labels = c(NA, "Magnitude"))
+
 ## Features with 3 categories
 n <- 3
 y <- matrix(seq(1, n), nrow = n)
+
 x <- matrix(c(grepthis("-X"), grepthis("-Y"), grepthis("-Z")), ncol = nrow(y))
+
 dt$featAxis <- factor(x %*% y, labels = c(NA, "X", "Y", "Z"))
 
 # Check to make sure all possible combinations of feature are accounted for by all possible combinations of the factor class variables.
 
 r1 <- nrow(dt[, .N, by = c("feature")])
+
 r2 <- nrow(dt[, .N, by = c("featDomain", "featAcceleration", "featInstrument", "featJerk", "featMagnitude", "featVariable", "featAxis")])
+
 r1 == r2
 
 
