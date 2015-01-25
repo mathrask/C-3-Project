@@ -1,7 +1,7 @@
 
 ### Load Packages
 
-packages <- c("data.table", "reshape2")
+packages <- c("data.table", "reshape2");
 sapply(packages, require, character.only = TRUE, quietly = TRUE)
 
 
