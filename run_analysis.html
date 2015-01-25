@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Load Packages</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h3>Load Packages</h3>
+
+<p>packages &lt;- c(&ldquo;data.table&rdquo;, &ldquo;reshape2&rdquo;)
+sapply(packages, require, character.only = TRUE, quietly = TRUE)</p>
+
+<h1>Set path</h1>
+
+<p>path &lt;- getwd()
+path</p>
+
+<p>##Get the data from site</p>
+
+<p>url &lt;- &ldquo;<a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a>&rdquo;
+f &lt;- &ldquo;dataSet.zip&rdquo;</p>
+
+<p>if (!file.exists(path)){
+        dir.create(path)
+}</p>
+
+<p>download.file(url, destfile=file.path(path, f))</p>
+
+<h1>Unzip the file</h1>
+
+<h1>executable &lt;- file.path(&ldquo;C:&rdquo;, &ldquo;Program Files (x86)&rdquo;, &ldquo;7-Zip&rdquo;, &ldquo;7z.exe&rdquo;)</h1>
+
+<h1>parameters &lt;- &ldquo;x&rdquo;</h1>
+
+<h1>cmd &lt;- paste(paste0(&ldquo;\&rdquo;&ldquo;, executable, &rdquo;\&ldquo;&rdquo;), parameters, paste0(&ldquo;\&rdquo;&ldquo;, file.path(path,</h1>
+
+<h1>f), &rdquo;\&ldquo;&rdquo;))</h1>
+
+<h1>system(cmd)</h1>
+
+<p>unzip(file.path(path,f), overwrite = TRUE)</p>
+
+<p>##The unzip put the files in a folder named UCI HAR Dataset. Set this folder as the input path. List the files here.</p>
+
+<p>pathIn &lt;- file.path(path, &ldquo;UCI HAR Dataset&rdquo;)
+list.files(pathIn, recursive = TRUE)</p>
+
+<h2>See the README.txt</h2>
+
+<h3>Read files</h3>
+
+<h1>Read subject files</h1>
+
+<p>dtSubjectTrain &lt;- fread(file.path(pathIn, &ldquo;train&rdquo;, &ldquo;subject_train.txt&rdquo;))
+dtSubjectTest  &lt;-  fread(file.path(pathIn, &ldquo;test&rdquo;, &ldquo;subject_test.txt&rdquo;))</p>
+
+<h1>Read Label/activity files</h1>
+
+<p>dtActivityTrain &lt;- fread(file.path(pathIn, &ldquo;train&rdquo;, &ldquo;Y_train.txt&rdquo;))
+dtActivityTest  &lt;- fread(file.path(pathIn, &ldquo;test&rdquo;,  &ldquo;Y_test.txt&rdquo;))</p>
+
+<h2>Read data files.</h2>
+
+<p>#fread bombs due to newline or EOF chars in the file</p>
+
+<h1>dtTrain &lt;- fread(file.path(pathIn, &ldquo;train&rdquo;, &ldquo;X_train.txt&rdquo;))</h1>
+
+<h1>dtTest  &lt;- fread(file.path(pathIn, &ldquo;test&rdquo;, &ldquo;X_test.txt&rdquo;))</h1>
+
+<p>fileToDataTable &lt;- function(f){</p>
+
+<pre><code>    df &lt;- read.table(f)
+    dt &lt;- data.table(df)
+</code></pre>
+
+<p>}</p>
+
+<p>dtTrain &lt;- fileToDataTable(file.path(pathIn, &ldquo;train&rdquo;, &ldquo;X_train.txt&rdquo;))
+dtTest  &lt;- fileToDataTable(file.path(pathIn, &ldquo;test&rdquo;, &ldquo;X_test.txt&rdquo;))</p>
+
+<h2>merge training and test data sets</h2>
+
+<h1>dtSubject &lt;- merge(dtSubjectTrain, dtSubjectTest, by.x=&ldquo;V1&rdquo;, all=TRUE)</h1>
+
+<p>dtSubject &lt;- rbind(dtSubjectTrain, dtSubjectTest)
+setnames(dtSubject, &ldquo;V1&rdquo;, &ldquo;subject&rdquo;)
+dtActivity &lt;- rbind(dtActivityTrain, dtActivityTest)
+setnames(dtActivity, &ldquo;V1&rdquo;, &ldquo;activityNum&rdquo;)
+dt &lt;- rbind(dtTrain, dtTest)</p>
+
+<p>#merge colum wise</p>
+
+<p>dtSubject &lt;- cbind(dtSubject, dtActivity)
+dt &lt;- cbind(dtSubject, dt)</p>
+
+<h1>setting up keys</h1>
+
+<p>setkey(dt, subject, activityNum)</p>
+
+<h2>Extract mean and std.</h2>
+
+<h1>Read features.txt</h1>
+
+<p>dtFeatures &lt;- fread(file.path(pathIn,&ldquo;features.txt&rdquo;))
+setnames(dtFeatures, names(dtFeatures), c(&ldquo;featureNum&rdquo;, &ldquo;featureName&rdquo;))</p>
+
+<h1>subset only for mean and std measurements</h1>
+
+<p>dtFeatures &lt;- dtFeatures[grepl(&ldquo;mean\(\)|std\(\)&rdquo;, featureName)]</p>
+
+<p>dtFeatures$featureCode &lt;- dtFeatures[,paste0(&ldquo;V&rdquo;, featureNum)]
+head(dtFeatures)</p>
+
+<p>dtFeatures$featureCode</p>
+
+<h1>subset using variable names</h1>
+
+<p>select &lt;- c(key(dt), dtFeatures$featureCode)
+dt &lt;- dt[, select, with=FALSE]</p>
+
+<h2>Use descriptive names for activities</h2>
+
+<h1>Read activity data</h1>
+
+<p>dtActivityNames &lt;- fread(file.path(pathIn, &ldquo;activity_labels.txt&rdquo;))
+setnames(dtActivityNames, names(dtActivityNames), c(&ldquo;activityNum&rdquo;, &ldquo;activityName&rdquo;))</p>
+
+<h2>Label activity names</h2>
+
+<p>dt&lt;- merge(dt, dtActivityNames, by = &ldquo;activityNum&rdquo;, all.x=TRUE)</p>
+
+<h1>Add activity name as a key</h1>
+
+<p>setkey(dt, subject, activityNum, activityName)</p>
+
+<h1>Melt the data table to a tall and thin one</h1>
+
+<p>dt &lt;- data.table(melt(dt, key(dt), variable.name= &ldquo;featureCode&rdquo;))</p>
+
+<h1>merge activity names</h1>
+
+<p>dt &lt;- merge(dt, dtFeatures[, list(featureNum, featureCode,featureName)], by=&ldquo;featureCode&rdquo;, all.x=TRUE)</p>
+
+<p>#Create a new variable, activity that is equivalent to activityName as a factor class. Create a new variable, feature that is equivalent to featureName as a factor class.</p>
+
+<p>dt$activity &lt;- factor(dt$activityName)
+dt$feature &lt;- factor(dt$featureName)</p>
+
+<h1>Create a function to  help</h1>
+
+<p>grepthis &lt;- function(regex) {
+        grepl(regex, dt$feature)
+}</p>
+
+<h2>Features with 2 categories</h2>
+
+<p>n &lt;- 2
+y &lt;- matrix(seq(1, n), nrow = n)
+x &lt;- matrix(c(grepthis(&ldquo;<sup>t&rdquo;),</sup> grepthis(&ldquo;<sup>f&rdquo;)),</sup> ncol = nrow(y))
+dt$featDomain &lt;- factor(x %<em>% y, labels = c(&ldquo;Time&rdquo;, &ldquo;Freq&rdquo;))
+x &lt;- matrix(c(grepthis(&ldquo;Acc&rdquo;), grepthis(&ldquo;Gyro&rdquo;)), ncol = nrow(y))
+dt$featInstrument &lt;- factor(x %</em>% y, labels = c(&ldquo;Accelerometer&rdquo;, &ldquo;Gyroscope&rdquo;))
+x &lt;- matrix(c(grepthis(&ldquo;BodyAcc&rdquo;), grepthis(&ldquo;GravityAcc&rdquo;)), ncol = nrow(y))
+dt$featAcceleration &lt;- factor(x %<em>% y, labels = c(NA, &ldquo;Body&rdquo;, &ldquo;Gravity&rdquo;))
+x &lt;- matrix(c(grepthis(&ldquo;mean()&rdquo;), grepthis(&ldquo;std()&rdquo;)), ncol = nrow(y))
+dt$featVariable &lt;- factor(x %</em>% y, labels = c(&ldquo;Mean&rdquo;, &ldquo;SD&rdquo;))</p>
+
+<h2>Features with 1 category</h2>
+
+<p>dt$featJerk &lt;- factor(grepthis(&ldquo;Jerk&rdquo;), labels = c(NA, &ldquo;Jerk&rdquo;))
+dt$featMagnitude &lt;- factor(grepthis(&ldquo;Mag&rdquo;), labels = c(NA, &ldquo;Magnitude&rdquo;))</p>
+
+<h2>Features with 3 categories</h2>
+
+<p>n &lt;- 3
+y &lt;- matrix(seq(1, n), nrow = n)
+x &lt;- matrix(c(grepthis(&ldquo;-X&rdquo;), grepthis(&ldquo;-Y&rdquo;), grepthis(&ldquo;-Z&rdquo;)), ncol = nrow(y))
+dt$featAxis &lt;- factor(x %*% y, labels = c(NA, &ldquo;X&rdquo;, &ldquo;Y&rdquo;, &ldquo;Z&rdquo;))</p>
+
+<h1>Check to make sure all possible combinations of feature are accounted for by all possible combinations of the factor class variables.</h1>
+
+<p>r1 &lt;- nrow(dt[, .N, by = c(&ldquo;feature&rdquo;)])
+r2 &lt;- nrow(dt[, .N, by = c(&ldquo;featDomain&rdquo;, &ldquo;featAcceleration&rdquo;, &ldquo;featInstrument&rdquo;, &ldquo;featJerk&rdquo;, &ldquo;featMagnitude&rdquo;, &ldquo;featVariable&rdquo;, &ldquo;featAxis&rdquo;)])
+r1 == r2</p>
+
+<h3>Create tidy data set</h3>
+
+<p>#Create a data set with the average of each variable for each activity and each subject.</p>
+
+<p>setkey(dt, subject, activity, featDomain, featAcceleration, featInstrument, featJerk, featMagnitude, featVariable, featAxis)
+dtTidy &lt;- dt[, list(count = .N, average = mean(value)), by = key(dt)]</p>
+
+<p>#make code book</p>
+
+<p>knit(&ldquo;makeCodebook.Rmd&rdquo;, output = &ldquo;codebook.md&rdquo;, encoding = &ldquo;ISO8859-1&rdquo;, quiet = TRUE)</p>
+
+<p>markdownToHTML(&ldquo;codebook.md&rdquo;, &ldquo;codebook.html&rdquo;)</p>
+
+</body>
+
+</html>
